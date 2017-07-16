@@ -7,17 +7,16 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 // class to handle file reading operation
+// singleton class
 public class Filereader {
 	
+	private static Filereader fileReader;
+	
 	private BufferedReader br;
-	LinkedList<String> history;
+	private LinkedList<String> history;
 		
-	public Filereader() throws FileNotFoundException {
-		
-		
+	private Filereader() throws FileNotFoundException {
 		br=new BufferedReader(new FileReader(FileCreater.logFileName));
-		
-		
 	}
 	
 	public LinkedList<String> read() throws IOException {
@@ -39,5 +38,14 @@ public class Filereader {
 		return history;
 	}
 	
-
+	public static Filereader getInstance() {
+		if(fileReader==null) {
+			try {
+				fileReader = new Filereader();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+		return fileReader;
+	}
 }

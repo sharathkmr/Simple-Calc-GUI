@@ -9,23 +9,18 @@ import javax.swing.JOptionPane;
 
 import com.calc.gui.utils.DateTime;
 
-/* NOTES
- *  1.  The main class cannot throw the exception implicitly
- *  	we need to declare another class explicitly to throw the exception
- * 
- * 
- * 
- * 
- */
-
-// to create a file everytime you open
+// to create a log file everytime you open application
+// singleton class
 public class FileCreater {
+	
+	private static FileCreater fc;
 	
 	private PrintWriter pw;
 	private File f;
+	// to store filename
 	public static String logFileName;
 	
-	public FileCreater() throws IOException {
+	private FileCreater() throws IOException {
 		logFileName = "history "+DateTime.getDateTime()+".txt";
 		f=new File(logFileName);
 		
@@ -53,5 +48,11 @@ public class FileCreater {
 		}
 	}
 	
+	public static FileCreater getInstance() throws IOException {
+		if(fc == null) {
+			fc = new FileCreater();
+		}
+		return fc;
+	}
 
 }
