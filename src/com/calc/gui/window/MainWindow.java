@@ -22,9 +22,6 @@ import com.calc.gui.panel.buttons.ButtonsPanel;
 
 public class MainWindow extends JFrame implements ActionListener {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -911260366911494812L;
 	
 	private static JDesktopPane desktop;
@@ -66,21 +63,21 @@ public class MainWindow extends JFrame implements ActionListener {
 	protected JMenuBar createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
 
-        //Set up the lone menu.
+        //Set up the File menu.
         JMenu menu = new JMenu("File");
         menu.setMnemonic(KeyEvent.VK_D);
         menuBar.add(menu);
 
-        //Set up the first menu item.
+        //Set up the history item.
         JMenuItem menuItem = new JMenuItem("History");
-        menuItem.setMnemonic(KeyEvent.VK_N);
+        menuItem.setMnemonic(KeyEvent.VK_H);
         menuItem.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_N, ActionEvent.ALT_MASK));
         menuItem.setActionCommand("history");
         menuItem.addActionListener(this);
         menu.add(menuItem);
 
-        //Set up the second menu item.
+        //Set up the quit item.
         menuItem = new JMenuItem("Quit");
         menuItem.setMnemonic(KeyEvent.VK_Q);
         menuItem.setAccelerator(KeyStroke.getKeyStroke(
@@ -88,7 +85,18 @@ public class MainWindow extends JFrame implements ActionListener {
         menuItem.setActionCommand("quit");
         menuItem.addActionListener(this);
         menu.add(menuItem);
-
+        
+        // setting up help menu
+        JMenu help = new JMenu("Help");
+        menuBar.add(help);
+        
+        // setting up code menu item
+        menuItem = new JMenuItem("Code");
+        menuItem.setMnemonic(KeyEvent.VK_Q);
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_C, ActionEvent.ALT_MASK));
+        
+        help.add(menuItem);
         return menuBar;
     }
 
@@ -103,12 +111,11 @@ public class MainWindow extends JFrame implements ActionListener {
     
   //Create a history frame.
     protected void createFrame() {
-        HistoryInternalFrame hisFrame = new HistoryInternalFrame();
+        HistoryInternalFrame hisFrame = HistoryInternalFrame.getInstance();
         hisFrame.setVisible(true); //necessary as of 1.3
         try {
 			HistoryInternalFrame.readData();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
         desktop.add(hisFrame);
@@ -117,7 +124,7 @@ public class MainWindow extends JFrame implements ActionListener {
         } catch (java.beans.PropertyVetoException e) {}
     }
     
-  //Quit the application.
+    //Quit the application.
     protected void quit() {
         System.exit(0);
     }
