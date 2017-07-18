@@ -4,26 +4,23 @@ import java.util.List;
 
 public class ComplexCalcAct {
 	
+	private static ComplexCalcAct complexCalc;
 	
-	
-	public float ComplexCalc(String input) {
-		 
-		/* 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 */
+	public static float ComplexCalc(String input) {
+		
+		long startTime = System.currentTimeMillis();
+		
+		complexCalc = new ComplexCalcAct();
+		
 		float result=0;
 		
 		List<String> args=new LinkedList<String>(); // [+,-,*,/]
-		args=operands(input);
-		int[] operandsIndex=OperatorIndex(input);
+		args=complexCalc.operands(input);
+		int[] operandsIndex=complexCalc.OperatorIndex(input);
 		int noOfOperants=operandsIndex.length;
-//		int noOfOperands=args.size();
+	//	int noOfOperands=args.size();
 		List<String> operants=new LinkedList<String>(); // [125,1256,12,156,5689]
-		operants=operators(input);
+		operants=complexCalc.operators(input);
 		System.out.println("operants: "+operants+" operands: "+args);
 		
 		while(noOfOperants>0)
@@ -31,24 +28,26 @@ public class ComplexCalcAct {
 			
 			if(operants.contains("/"))
 			{
-				result=complexCalcLogic(operants, args, result, "/", "division");
+				result=complexCalc.complexCalcLogic(operants, args, result, "/", "division");
 			}
 			else if(operants.contains("*"))
 			{
-				result=complexCalcLogic(operants, args, result, "*", "multiplication");
+				result=complexCalc.complexCalcLogic(operants, args, result, "*", "multiplication");
 			}
 			else if(operants.contains("+"))
 			{
-				result=complexCalcLogic(operants, args, result, "+", "addition");
+				result=complexCalc.complexCalcLogic(operants, args, result, "+", "addition");
 			}
 			else if(operants.contains("-"))
 			{
-				result=complexCalcLogic(operants, args, result, "-", "subtraction");
+				result=complexCalc.complexCalcLogic(operants, args, result, "-", "subtraction");
 			}
 			noOfOperants--;
 		}
 		
 		System.out.println("args: "+args+" operants: "+operants);
+		long endTime = System.currentTimeMillis();
+		System.out.println("Time Elapsed to calculate : "+startTime+" to "+endTime+" : "+(endTime-startTime)+" (ms)");
 		return result;
 		
 	}
@@ -277,4 +276,3 @@ public class ComplexCalcAct {
 		return operatorIndex;
 	}
 }
-
